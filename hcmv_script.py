@@ -19,5 +19,26 @@ os.system("fastq-dump -I --split-files SRR5660033.1")
 os.system("fastq-dump -I --split-files SRR5660044.1")
 os.system("fastq-dump -I --split-files SRR5660045.1")
 
+
 #run thru script that parses through NCBI HCMV genome Genbank file
-os.system("python3 genbank_parse.py")
+os.chdir(".."
+os.system("python3 genbank_parse.py") #logs the # of CDS in genome and saves them into FASTA format txt file (hcmvCompleteGenome.txt)
+
+#build the index of transcriptome with kallisto
+os.system("mkdir index")
+os.system("time kallisto index -i index/index.idx hcmvCompleteGenome.txt")
+
+#create appropriate output folders for each sample transcriptome
+os.system("mkdir outputs")
+os.chdir("outputs")
+os.system("mkdir SRR5660030.1")
+os.system("mkdir SRR5660033.1")
+os.system("mkdir SRR5660044.1")
+os.system("mkdir SRR5660045.1")
+os.chdir("..")
+
+#quantification of each sample with index created
+os.system("time kallisto quant -i index/index.idx -o outputs/SRR5660030.1 -b 30 -t 2 SRR5660030.1_1.fastq SRR5660030.1_2.fastq")
+os.system("time kallisto quant -i index/index.idx -o outputs/SRR5660033.1 -b 30 -t 2 SRR5660033.1_1.fastq SRR5660033.1_2.fastq")
+os.system("time kallisto quant -i index/index.idx -o outputs/SRR5660044.1 -b 30 -t 2 SRR5660044.1_1.fastq SRR5660044.1_2.fastq")
+os.system("time kallisto quant -i index/index.idx -o outputs/SRR5660045.1 -b 30 -t 2 SRR5660045.1_1.fastq SRR5660045.1_2.fastq")
