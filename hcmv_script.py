@@ -42,3 +42,10 @@ os.system("time kallisto quant -i index/index.idx -o outputs/SRR5660030.1 -b 30 
 os.system("time kallisto quant -i index/index.idx -o outputs/SRR5660033.1 -b 30 -t 2 SRR5660033.1_1.fastq SRR5660033.1_2.fastq")
 os.system("time kallisto quant -i index/index.idx -o outputs/SRR5660044.1 -b 30 -t 2 SRR5660044.1_1.fastq SRR5660044.1_2.fastq")
 os.system("time kallisto quant -i index/index.idx -o outputs/SRR5660045.1 -b 30 -t 2 SRR5660045.1_1.fastq SRR5660045.1_2.fastq")
+
+#using R package sleuth to find differentially expressed genes between timepoints
+os.system("Rscript sleuth_degs.R")
+logging.basicConfig(filename="miniProject.log", level=logging.INFO) #loop through and log each file of the deg results
+fdr05_results = open('fdr05_results.txt', 'r')
+for line in fdr05_results:
+    logging.info(line)
