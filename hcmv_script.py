@@ -19,7 +19,7 @@ os.system("fastq-dump -I --split-files SRR5660033.1")
 os.system("fastq-dump -I --split-files SRR5660044.1")
 os.system("fastq-dump -I --split-files SRR5660045.1")
 
-#accessing the HCMV Genbank ref genome (NCBI accession EF999921)
+#accessing the HCMV Genbank genome (NCBI accession EF999921)
 from Bio import Entrez
 from Bio import SeqIO
 Entrez.email = "jessiechen0513@gmail.com"
