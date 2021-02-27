@@ -7,14 +7,16 @@ handle = Entrez.efetch(db="nucleotide", id="EF999921", rettype="gb", retmode="te
 record = SeqIO.read(handle, "genbank")
 handle.close()
 
+outfile = open("hcmvCompleteGenome.txt", "w") #file to save the CDS regions only
+
 logging.basicConfig(filename="miniProject.log", level=logging.INFO) #opening file for logging info
 num_CDS = 0
 for feature in record.features: #loop all features and counting ones that are CDS features
         if feature.type  == "CDS":
                 num_CDS += 1
+                name = str(feature.qualifiers['protein_id']) #saving the protein id as the name for seq
+                seq = feature.extract(record.seq) #extract out seq
+                outfile.write(">" + name + "\n" + str(seq) + "\n" #fasta output in file without line wrapping
 logging.info('The HCMV genome (EF999921) has ' + str(num_CDS) + ' CDS.') #write to log file
 
-#writing out the full sequence from FASTA into separate file
-outfile = open("hcmv_complete_genome.txt", "w")
-outfile.write(str(record.seq))
 outfile.close()
