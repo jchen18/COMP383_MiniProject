@@ -13,3 +13,8 @@ for feature in record.features: #loop all features and counting ones that are CD
         if feature.type  == "CDS":
                 num_CDS += 1
 logging.info('The HCMV genome (EF999921) has ' + str(num_CDS) + ' CDS.') #write to log file
+
+#writing out the full sequence from FASTA into separate file
+outfile = open("hcmv_complete_genome.txt", "w")
+outfile.write(str(record.seq))
+outfile.close()
