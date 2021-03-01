@@ -57,4 +57,31 @@ os.system("bowtie2 -x hcmv -1 SRR5660033.1_1.fastq -2 SRR5660033.1_2.fastq -S hc
 os.system("bowtie2 -x hcmv -1 SRR5660044.1_1.fastq -2 SRR5660044.1_2.fastq -S hcmvmap.sam --al-conc SRR5660044.1_mapped.fq")
 os.system("bowtie2 -x hcmv -1 SRR5660045.1_1.fastq -2 SRR5660045.1_2.fastq -S hcmvmap.sam --al-conc SRR5660045.1_mapped.fq")
 
+#finding the number of reads in each transcriptome before and after bowtie2 mapping and reporting to log file
+os.system("wc -l < SRR5660030.1_1.fastq >> before_len_files.txt")
+os.system("wc -l < SRR5660033.1_1.fastq >> before_len_files.txt")
+os.system("wc -l < SRR5660044.1_1.fastq >> before_len_files.txt")
+os.system("wc -l < SRR5660045.1_1.fastq >> before_len_files.txt")
+
+os.system("wc -l < SRR5660030.1_mapped.1.fq >> after_len_files.txt")
+os.system("wc -l < SRR5660033.1_mapped.1.fq >> after_len_files.txt")
+os.system("wc -l < SRR5660044.1_mapped.1.fq >> after_len_files.txt")
+os.system("wc -l < SRR5660045.1_mapped.1.fq >> after_len_files.txt")
+
+#dividing line counts by 4 and saving as lengths as list - reading to log file
+before_bowtie = open('before_len_files.txt').read().rstrip()
+before_lens = before_bowtie.split('\n')
+before_lens = list(map(int, before_lens)) 
+before_lens = [length//4 for length in before_lens]
+
+after_bowtie = open('after_len_files.txt').read().rstrip()
+after_lens = after_bowtie.split('\n')
+after_lens = list(map(int, after_lens)) 
+after_lens = [length//4 for length in after_lens]
+
+logging.basicConfig(filename="miniProject.log", level = logging.INFO)
+logging.info("Donor 1 (2dpi) had " + str(before_lens[0]) + " read pairs before Bowtie2 filtering and " + str>
+logging.info("Donor 1 (6dpi) had " + str(before_lens[1]) + " read pairs before Bowtie2 filtering and " + str>
+logging.info("Donor 3 (2dpi) had " + str(before_lens[2]) + " read pairs before Bowtie2 filtering and " + str>
+logging.info("Donor 3 (6dpi) had " + str(before_lens[3]) + " read pairs before Bowtie2 filtering and " + str>
 
