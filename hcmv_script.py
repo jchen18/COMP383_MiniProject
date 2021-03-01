@@ -26,7 +26,7 @@ os.system("python3 genbank_parse.py") #logs the # of CDS in genome and saves the
 
 #build the index of transcriptome with kallisto
 os.system("mkdir index")
-os.system("time kallisto index -i index/index.idx hcmvCompleteGenome.txt")
+os.system("time kallisto index -i index/index.idx hcmvCompleteTranscriptome.txt")
 
 #create appropriate output folders for each sample transcriptome
 os.system("mkdir outputs")
@@ -49,3 +49,12 @@ logging.basicConfig(filename="miniProject.log", level=logging.INFO) #loop throug
 fdr05_results = open('fdr05_results.txt', 'r')
 for line in fdr05_results:
     logging.info(line)
+
+#using bowtie to map the sample reads to the hcmv transcriptome
+os.system("bowtie2-build hcmvCompleteTranscriptome.txt hcmv")
+os.system("bowtie2 -x hcmv -1 SRR5660030.1_1.fastq -2 SRR5660030.1_2.fastq -S hcmvmap.sam --al-conc SRR5660030.1_mapped.fq")
+os.system("bowtie2 -x hcmv -1 SRR5660033.1_1.fastq -2 SRR5660033.1_2.fastq -S hcmvmap.sam --al-conc SRR5660033.1_mapped.fq")
+os.system("bowtie2 -x hcmv -1 SRR5660044.1_1.fastq -2 SRR5660044.1_2.fastq -S hcmvmap.sam --al-conc SRR5660044.1_mapped.fq")
+os.system("bowtie2 -x hcmv -1 SRR5660045.1_1.fastq -2 SRR5660045.1_2.fastq -S hcmvmap.sam --al-conc SRR5660045.1_mapped.fq")
+
+
