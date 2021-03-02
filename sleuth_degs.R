@@ -16,6 +16,5 @@ sleuth_table <- sleuth_results(so, 'reduced:full', 'lrt', show_all=FALSE)
 #filter most significant results and sort by pval
 sleuth_significant <- dplyr::filter(sleuth_table, qval<=0.05) %>% dplyr::arrange(pval)
 #write FDR < 0.05 transcripts to file
-write.table(sleuth_significant[, c(1, 4, 2, 3)], file="fdr05_results.txt", quote = FALSE, row.names = F>
-
+write.table(sleuth_significant[, c(1, 4, 2, 3)], file="miniProject_Jessie_Chen/fdr05_results.txt", quote = FALSE, row.names = FALSE,sep = '\t')
 
