@@ -107,3 +107,51 @@ for contig in long_contigs: #loop through each and add to total_bp counter
     total_bp += len(contig)
 #add total bp contig length to log
 logging.info("There are " + str(total_bp) + " bp in the assembly.")
+
+#retrieving the longest contig
+long_contigs.sort(key = len) #sorting the list by length
+longest_contig = long_contigs[-1] #the last contig in list should be the longest
+for record in SeqIO.parse(infile, "fasta"): #loop through and extracting the fasta id for the longest contig 
+        seq = str(record.seq)
+        if seq == longest_contig:
+            longest_id = str(record.id)
+longest_contig_file = open("longest_contig_file.txt", "w") #writing the longest contig in fasta format into a file
+longest_contig_file.write(">" + longest_id + "\n")
+longest_contig_file.write(longest_contig)
+longest_contig_file.close()
+
+#making the blast nt database from the fasta records from NCBI search of Betaherpesvirinae subfamily
+betahep_fasta = "betaherp_sequences.fasta"
+makeblast_command = "makeblastdb -in " + betahep_fasta + " -out betaherps -title betaherps -dbtype nucl"
+os.system(makeblast_command)
+
+#executing the blast search using longest contig text file as the input
+input_file = "longest_contig_file.txt"
+output_file = "hcmv_blastn_results.csv"
+blast_command = "blastn -query " + input_file + " -db betaherps -out " + output_file + ' -outfmt "10 sacc pident length qstart qend sstart send bitsco>
+os.system(blast_command)
+
+#parse through the blast results csv and extract out top 10 hits and their info
+import csv
+def parse_blast(filename, headers):
+    x = []
+    blast_results = open(filename, 'r')
+    rows = csv.DictReader(blast_results, headers, delimiter=',')
+    for row in rows:
+        x.append(row)
+    blast_results.close()
+    return x
+headers = ['sacc', 'pident', 'length', 'qstart', 'qend', 'sstart', 'send', 'bitscore', 'evalue', 'stitle']
+x = parse_blast(output_file, headers)
+top_ten = x[:10]
+
+#opening log file and writing the headers and top hit info 
+logging.basicConfig(filename="miniProject.log", level = logging.INFO)
+headers_msg = "\t".join(headers) #headers added tab-delimited
+logging.info(headers_msg)
+for hit in top_ten: #loops thru and saves hit info as a list and writes them to log file tab-delimited
+        hit_info = list(hit.values())
+        hit_info = [str(i) for i in hit_info]
+        hit_info = "\t".join(hit_info)
+        logging.info(hit_info)
+
