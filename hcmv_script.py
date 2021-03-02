@@ -1,4 +1,5 @@
 import os
+import logging
 #creating outfile folder
 os.system("mkdir miniProject_Jessie_Chen")
 os.chdir("miniProject_Jessie_Chen")
@@ -21,8 +22,9 @@ os.system("fastq-dump -I --split-files SRR5660045.1")
 
 
 #run thru script that parses through NCBI HCMV genome Genbank file
-os.chdir(".."
-os.system("python3 genbank_parse.py") #logs the # of CDS in genome and saves them into FASTA format txt file (hcmvCompleteGenome.txt)
+os.chdir("..")
+os.system("python3 genbank_parse.py") #logs the # of CDS in genome and saves them into FASTA format txt file (hcmvCompleteTranscriptome.txt)
+os.chdir("miniProject_Jessie_Chen")
 
 #build the index of transcriptome with kallisto
 os.system("mkdir index")
@@ -44,7 +46,9 @@ os.system("time kallisto quant -i index/index.idx -o outputs/SRR5660044.1 -b 30 
 os.system("time kallisto quant -i index/index.idx -o outputs/SRR5660045.1 -b 30 -t 2 SRR5660045.1_1.fastq SRR5660045.1_2.fastq")
 
 #using R package sleuth to find differentially expressed genes between timepoints
+os.chdir("..")
 os.system("Rscript sleuth_degs.R")
+os.chdir("miniProject_Jessie_Chen")
 logging.basicConfig(filename="miniProject.log", level=logging.INFO) #loop through and log each file of the deg results
 fdr05_results = open('fdr05_results.txt', 'r')
 for line in fdr05_results:
@@ -121,11 +125,14 @@ longest_contig_file.write(longest_contig)
 longest_contig_file.close()
 
 #making the blast nt database from the fasta records from NCBI search of Betaherpesvirinae subfamily
+os.chdir("..")
+os.system("unzip betaherp_sequences.fasta.gz")
 betahep_fasta = "betaherp_sequences.fasta"
-makeblast_command = "makeblastdb -in " + betahep_fasta + " -out betaherps -title betaherps -dbtype nucl"
+makeblast_command = "makeblastdb -in " + betahep_fasta + " -out miniProject_Jessie_Chen/betaherps -title miniProject_Jessie_Chen/betaherps -dbtype nucl"
 os.system(makeblast_command)
 
 #executing the blast search using longest contig text file as the input
+os.chdir("miniProject_Jessie_Chen")
 input_file = "longest_contig_file.txt"
 output_file = "hcmv_blastn_results.csv"
 blast_command = "blastn -query " + input_file + " -db betaherps -out " + output_file + ' -outfmt "10 sacc pident length qstart qend sstart send bitsco>
