@@ -85,3 +85,25 @@ logging.info("Donor 1 (6dpi) had " + str(before_lens[1]) + " read pairs before B
 logging.info("Donor 3 (2dpi) had " + str(before_lens[2]) + " read pairs before Bowtie2 filtering and " + str>
 logging.info("Donor 3 (6dpi) had " + str(before_lens[3]) + " read pairs before Bowtie2 filtering and " + str>
 
+#assembling all four transcriptomes together to produce 1 assembly - using spades
+os.system("spades -k 55,77,99,127 -t 2 --only-assembler --pe1-1 SRR5660030.1_mapped.1.fq --pe1-2 SRR5660030.1_mapped.2.fq --pe2-1 SRR5660033.1_mapped.1.fq --pe2-2 SRR5660033.1_mapped.2.fq --pe3-1 SRR5660044.1_mapped.1.fq  --pe3-2 SRR5660044.1_mapped.2.fq --pe4-1 SRR5660045.1_mapped.1.fq --pe4-2 SRR5660045.1_mapped.2.fq -o hcmv_assembly/")
+logging.info("spades -k 55,77,99,127 -t 2 --only-assembler --pe1-1 SRR5660030.1_mapped.1.fq --pe1-2 SRR5660030.1_mapped.2.fq --pe2-1 SRR5660033.1_mapped.1.fq --pe2-2 SRR5660033.1_mapped.2.fq --pe3-1 SRR5660044.1_mapped.1.fq  --pe3-2 SRR5660044.1_mapped.2.fq --pe4-1 SRR5660045.1_mapped.1.fq --pe4-2 SRR5660045.1_mapped.2.fq -o hcmv_assembly/")
+
+#sifting through the contigs from the assembly and finding number of contigs with length > 1000 bp
+infile = "hcmv_assembly/contigs.fasta"
+
+from Bio import SeqIO
+long_contigs = []
+for record in SeqIO.parse(infile, "fasta"): #loop through the seqs and only add contigs of length > 1000bp to the long_contigs list
+        seq = str(record.seq)
+        if len(seq) > 1000:
+            long_contigs.append(seq)
+#add num of contigs > 1000bp to the log file
+logging.info("There are " + str(len(long_contigs)) + " contigs > 1000 bp in the assembly.")
+
+#calculating total length of the assembly by adding up the lengths of contigs > 1000 bp
+total_bp = 0
+for contig in long_contigs: #loop through each and add to total_bp counter
+    total_bp += len(contig)
+#add total bp contig length to log
+logging.info("There are " + str(total_bp) + " bp in the assembly.")
