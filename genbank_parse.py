@@ -7,9 +7,9 @@ handle = Entrez.efetch(db="nucleotide", id="EF999921", rettype="gb", retmode="te
 record = SeqIO.read(handle, "genbank")
 handle.close()
 
-outfile = open("hcmvCompleteGenome.txt", "w") #file to save the CDS regions only
+outfile = open("miniProject_Jessie_Chen/hcmvCompleteTranscriptome.txt", "w") #file to save the CDS regions only
 
-logging.basicConfig(filename="miniProject.log", level=logging.INFO) #opening file for logging info
+logging.basicConfig(filename="miniProject_Jessie_Chen/miniProject.log", level=logging.INFO) #opening file for logging info
 num_CDS = 0
 for feature in record.features: #loop all features and counting ones that are CDS features
         if feature.type  == "CDS":
