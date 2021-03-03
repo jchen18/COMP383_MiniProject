@@ -27,13 +27,16 @@ Once you have cloned the repository into your directory using this command,
 <br>
 `git clone https://github.com/jchen18/COMP383_MiniProject.git`
 <br>
+<br>
 Move into the COMP383_MiniProject directory created,
 <br>
 `cd COMP383_MiniProject`
 <br>
+<br>
 To run the script, you will need to run the hcmv_script.py file, 
 <br>
 `python3 hcmv_script.py`
+<br>
 <br>
 You will be prompted with the option of either a **full** run using all input reads from the study or a **test** run using the test data available in the test_data directory. The test data consists of 10,000 pair-end reads per sample. 
 
