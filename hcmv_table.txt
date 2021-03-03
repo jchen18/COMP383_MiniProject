@@ -2,4 +2,4 @@ sample timepoint path
 SRR5660030 2dpi miniProject_Jessie_Chen/outputs/SRR5660030.1
 SRR5660033 6dpi miniProject_Jessie_Chen/outputs/SRR5660033.1
 SRR5660044 2dpi miniProject_Jessie_Chen/outputs/SRR5660044.1
-SRR5660045 6dpi miniProejct_Jessie_Chen/outputs/SRR5660045.1
+SRR5660045 6dpi miniProject_Jessie_Chen/outputs/SRR5660045.1
