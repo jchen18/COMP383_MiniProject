@@ -33,7 +33,7 @@ elif run_type == "test":
         shutil.copyfile("test_data/SRR5660044.1_2_short.fastq", "miniProject_Jessie_Chen/SRR5660044.1_2.fastq")
         shutil.copyfile("test_data/SRR5660045.1_1_short.fastq", "miniProject_Jessie_Chen/SRR5660045.1_1.fastq")
         shutil.copyfile("test_data/SRR5660045.1_2_short.fastq", "miniProject_Jessie_Chen/SRR5660045.1_2.fastq")
-        shutil.copyfile("miniProject_Jessie_Chen")
+        os.chdir("miniProject_Jessie_Chen")
 
 else:
         print("Error in input - try to type again either 'full' or 'test'")
