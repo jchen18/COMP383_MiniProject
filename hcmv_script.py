@@ -148,11 +148,10 @@ shutil.copyfile("betaherp_sequences.fasta.gz", "miniProject_Jessie_Chen/betaherp
 os.chdir("miniProject_Jessie_Chen")
 os.system("gunzip betaherp_sequences.fasta.gz")
 betahep_fasta = "betaherp_sequences.fasta"
-makeblast_command = "makeblastdb -in " + betahep_fasta + " -out miniProject_Jessie_Chen/betaherps -title miniProject_Jessie_Chen/betaherps -dbtype nucl"
+makeblast_command = "makeblastdb -in " + betahep_fasta + " -out betaherps -title betaherps -dbtype nucl"
 os.system(makeblast_command)
 
 #executing the blast search using longest contig text file as the input
-os.chdir("miniProject_Jessie_Chen")
 input_file = "longest_contig_file.txt"
 output_file = "hcmv_blastn_results.csv"
 blast_command = "blastn -query " + input_file + " -db betaherps -out " + output_file + ' -outfmt "10 sacc pident length qstart qend sstart send bitscore evalue stitle"'
