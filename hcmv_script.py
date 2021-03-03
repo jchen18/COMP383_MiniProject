@@ -5,6 +5,7 @@ import logging
 os.system("mkdir miniProject_Jessie_Chen")
 os.chdir("miniProject_Jessie_Chen")
 
+#option for either doing full run or running thru script with test data of 10,000 sample pair reads
 run_type = input("Type in 'full' for full run or 'test' to run with test data: ")
 if run_type == "full":
         #retrieving HCMV transcriptomes of patients
@@ -25,6 +26,7 @@ if run_type == "full":
 
 elif run_type == "test":
         os.chdir("..")
+        #moving test data files into the miniProject_Jessie_Chen directory
         shutil.copyfile("test_data/SRR5660030.1_1_short.fastq", "miniProject_Jessie_Chen/SRR5660030.1_1.fastq")
         shutil.copyfile("test_data/SRR5660030.1_2_short.fastq", "miniProject_Jessie_Chen/SRR5660030.1_2.fastq")
         shutil.copyfile("test_data/SRR5660033.1_1_short.fastq", "miniProject_Jessie_Chen/SRR5660033.1_1.fastq")
