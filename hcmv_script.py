@@ -40,6 +40,7 @@ os.system("mkdir SRR5660045.1")
 os.chdir("..")
 
 #quantification of each sample with index created
+os.chdir("miniProject_Jessie_Chen")
 os.system("time kallisto quant -i index/index.idx -o outputs/SRR5660030.1 -b 30 -t 2 SRR5660030.1_1.fastq SRR5660030.1_2.fastq")
 os.system("time kallisto quant -i index/index.idx -o outputs/SRR5660033.1 -b 30 -t 2 SRR5660033.1_1.fastq SRR5660033.1_2.fastq")
 os.system("time kallisto quant -i index/index.idx -o outputs/SRR5660044.1 -b 30 -t 2 SRR5660044.1_1.fastq SRR5660044.1_2.fastq")
@@ -125,8 +126,7 @@ longest_contig_file.write(longest_contig)
 longest_contig_file.close()
 
 #making the blast nt database from the fasta records from NCBI search of Betaherpesvirinae subfamily
-os.chdir("..")
-os.system("unzip betaherp_sequences.fasta.gz")
+os.system("gunzip betaherp_sequences.fasta.gz")
 betahep_fasta = "betaherp_sequences.fasta"
 makeblast_command = "makeblastdb -in " + betahep_fasta + " -out miniProject_Jessie_Chen/betaherps -title miniProject_Jessie_Chen/betaherps -dbtype nucl"
 os.system(makeblast_command)
