@@ -16,7 +16,7 @@ for feature in record.features: #loop all features and counting ones that are CD
                 num_CDS += 1
                 name = str(feature.qualifiers['protein_id']) #saving the protein id as the name for seq
                 seq = feature.extract(record.seq) #extract out seq
-                outfile.write(">" + name + "\n" + str(seq) + "\n" #fasta output in file without line wrapping
+                outfile.write(">" + name + "\n" + str(seq) + "\n") #fasta output in file without line wrapping
 logging.info('The HCMV genome (EF999921) has ' + str(num_CDS) + ' CDS.') #write to log file
 
 outfile.close()
