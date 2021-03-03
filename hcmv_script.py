@@ -4,22 +4,39 @@ import logging
 os.system("mkdir miniProject_Jessie_Chen")
 os.chdir("miniProject_Jessie_Chen")
 
-#retrieving HCMV transcriptomes of patients
-#Donor 1 (2dpi)
-os.system("wget https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-11/SRR5660030/SRR5660030.1")
-#Donor 1 (6dpi)
-os.system("wget https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-11/SRR5660033/SRR5660033.1")
-#Donor 3 (2dpi)
-os.system("wget https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-11/SRR5660044/SRR5660044.1")
-#Donor 3 (6dpi)
-os.system("wget https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-11/SRR5660045/SRR5660045.1")
+run_type = input("Type in 'full' for full run or 'test' to run with test data: ")
+if run_type == "full":
+        #retrieving HCMV transcriptomes of patients
+        #Donor 1 (2dpi)
+        os.system("wget https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-11/SRR5660030/SRR5660030.1")
+        #Donor 1 (6dpi)
+        os.system("wget https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-11/SRR5660033/SRR5660033.1")
+        #Donor 3 (2dpi)
+        os.system("wget https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-11/SRR5660044/SRR5660044.1")
+        #Donor 3 (6dpi)
+        os.system("wget https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-11/SRR5660045/SRR5660045.1")
 
-#convert to paired-end fastq files
-os.system("fastq-dump -I --split-files SRR5660030.1")
-os.system("fastq-dump -I --split-files SRR5660033.1")
-os.system("fastq-dump -I --split-files SRR5660044.1")
-os.system("fastq-dump -I --split-files SRR5660045.1")
+        #convert to paired-end fastq files
+        os.system("fastq-dump -I --split-files SRR5660030.1")
+        os.system("fastq-dump -I --split-files SRR5660033.1")
+        os.system("fastq-dump -I --split-files SRR5660044.1")
+        os.system("fastq-dump -I --split-files SRR5660045.1")
 
+elif run_type == "test":
+        os.chdir("..")
+        shutil.copyfile("test_data/SRR5660030.1_1_short.fastq", "miniProject_Jessie_Chen/SRR5660030.1_1.fastq")
+        shutil.copyfile("test_data/SRR5660030.1_2_short.fastq", "miniProject_Jessie_Chen/SRR5660030.1_2.fastq")
+        shutil.copyfile("test_data/SRR5660033.1_1_short.fastq", "miniProject_Jessie_Chen/SRR5660033.1_1.fastq")
+        shutil.copyfile("test_data/SRR5660033.1_2_short.fastq", "miniProject_Jessie_Chen/SRR5660033.1_2.fastq")
+        shutil.copyfile("test_data/SRR5660044.1_1_short.fastq", "miniProject_Jessie_Chen/SRR5660044.1_1.fastq")
+        shutil.copyfile("test_data/SRR5660044.1_2_short.fastq", "miniProject_Jessie_Chen/SRR5660044.1_2.fastq")
+        shutil.copyfile("test_data/SRR5660045.1_1_short.fastq", "miniProject_Jessie_Chen/SRR5660045.1_1.fastq")
+        shutil.copyfile("test_data/SRR5660045.1_2_short.fastq", "miniProject_Jessie_Chen/SRR5660045.1_2.fastq")
+        shutil.copyfile("miniProject_Jessie_Chen")
+
+else:
+        print("Error in input - try to type again either 'full' or 'test'")
+        run_type = input("Type in 'full' for full run or 'test' to run with test data: ")
 
 #run thru script that parses through NCBI HCMV genome Genbank file
 os.chdir("..")
