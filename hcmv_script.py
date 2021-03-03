@@ -84,10 +84,10 @@ after_lens = list(map(int, after_lens))
 after_lens = [length//4 for length in after_lens]
 
 logging.basicConfig(filename="miniProject.log", level = logging.INFO)
-logging.info("Donor 1 (2dpi) had " + str(before_lens[0]) + " read pairs before Bowtie2 filtering and " + str>
-logging.info("Donor 1 (6dpi) had " + str(before_lens[1]) + " read pairs before Bowtie2 filtering and " + str>
-logging.info("Donor 3 (2dpi) had " + str(before_lens[2]) + " read pairs before Bowtie2 filtering and " + str>
-logging.info("Donor 3 (6dpi) had " + str(before_lens[3]) + " read pairs before Bowtie2 filtering and " + str>
+logging.info("Donor 1 (2dpi) had " + str(before_lens[0]) + " read pairs before Bowtie2 filtering and " + str(after_lens[0]) + " read pairs after.")
+logging.info("Donor 1 (6dpi) had " + str(before_lens[1]) + " read pairs before Bowtie2 filtering and " + str(after_lens[1]) + " read pairs after.")
+logging.info("Donor 3 (2dpi) had " + str(before_lens[2]) + " read pairs before Bowtie2 filtering and " + str(after_lens[2]) + " read pairs after.")
+logging.info("Donor 3 (6dpi) had " + str(before_lens[3]) + " read pairs before Bowtie2 filtering and " + str(after_lens[3]) + " read pairs after.")
 
 #assembling all four transcriptomes together to produce 1 assembly - using spades
 os.system("spades -k 55,77,99,127 -t 2 --only-assembler --pe1-1 SRR5660030.1_mapped.1.fq --pe1-2 SRR5660030.1_mapped.2.fq --pe2-1 SRR5660033.1_mapped.1.fq --pe2-2 SRR5660033.1_mapped.2.fq --pe3-1 SRR5660044.1_mapped.1.fq  --pe3-2 SRR5660044.1_mapped.2.fq --pe4-1 SRR5660045.1_mapped.1.fq --pe4-2 SRR5660045.1_mapped.2.fq -o hcmv_assembly/")
@@ -135,7 +135,7 @@ os.system(makeblast_command)
 os.chdir("miniProject_Jessie_Chen")
 input_file = "longest_contig_file.txt"
 output_file = "hcmv_blastn_results.csv"
-blast_command = "blastn -query " + input_file + " -db betaherps -out " + output_file + ' -outfmt "10 sacc pident length qstart qend sstart send bitsco>
+blast_command = "blastn -query " + input_file + " -db betaherps -out " + output_file + ' -outfmt "10 sacc pident length qstart qend sstart send bitscore evalue stitle"'
 os.system(blast_command)
 
 #parse through the blast results csv and extract out top 10 hits and their info
