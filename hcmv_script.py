@@ -1,4 +1,5 @@
 import os
+import shutil
 import logging
 #creating outfile folder
 os.system("mkdir miniProject_Jessie_Chen")
