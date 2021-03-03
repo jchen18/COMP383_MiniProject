@@ -143,6 +143,9 @@ longest_contig_file.write(longest_contig)
 longest_contig_file.close()
 
 #making the blast nt database from the fasta records from NCBI search of Betaherpesvirinae subfamily
+os.chdir("..")
+shutil.copyfile("betaherp_sequences.fasta.gz", "miniProject_Jessie_Chen/betaherp_sequences.fasta.gz")
+os.chdir("miniProject_Jessie_Chen")
 os.system("gunzip betaherp_sequences.fasta.gz")
 betahep_fasta = "betaherp_sequences.fasta"
 makeblast_command = "makeblastdb -in " + betahep_fasta + " -out miniProject_Jessie_Chen/betaherps -title miniProject_Jessie_Chen/betaherps -dbtype nucl"
